@@ -1,6 +1,7 @@
 #!/usr/bin/make -f
 #
 # Copyright 2003 - 2018, Ron Lee.
+# Copyright 2019, Sascha Kuehndel
 
 SHELL = /bin/bash
 
