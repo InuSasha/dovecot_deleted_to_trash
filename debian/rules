@@ -1,0 +1,61 @@
+#!/usr/bin/make -f
+#
+# Copyright 2003 - 2018, Ron Lee.
+
+SHELL = /bin/bash
+
+DEB_HOST_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+
+clean:
+	dh_testdir
+	$(MAKE) clean || true
+#	$(RM) .config dovecot-antispam.7
+	dh_clean
+
+
+build: build-arch
+build-arch: lib90_deleted_to_trash_plugin.so
+build-indep:
+
+lib90_deleted_to_trash_plugin.so:
+	dh_testdir
+#	cp -f defconfig .config
+	$(MAKE) CC="$(DEB_HOST_GNU_TYPE)-gcc" CFLAGS="-O2 -g" PLUGIN_NAME="lib90_deleted_to_trash_plugin.so"
+
+
+install: install-arch
+
+install-arch: build-arch
+	dh_testdir
+	dh_testroot
+	dh_prep
+	dh_install lib90_deleted_to_trash_plugin.so usr/lib/dovecot/modules
+#	ln -sf antispam.7 dovecot-antispam.7
+#	dh_installman dovecot-antispam.7
+
+install-indep: build-indep
+
+
+binary: binary-arch
+
+binary-arch: DOVECOT_ABI_VERSION = $(shell cat /usr/share/dovecot/dovecot-abi)
+binary-arch: install-arch
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs
+	dh_installdocs
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol -- -V'dovecot:ABI-Version=$(DOVECOT_ABI_VERSION)'
+	dh_md5sums
+	dh_builddeb
+
+binary-indep: install-indep
+
+
+.PHONY: clean build build-arch build-indep	\
+	binary binary-arch binary-indep		\
+	install install-arch install-indep

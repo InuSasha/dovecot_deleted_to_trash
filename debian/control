@@ -1,0 +1,19 @@
+Source: dovecot-deleted-to-trash
+Section: mail
+Priority: extra
+Maintainer: Sascha Kuehndel <dev@inusasha.de>
+Uploaders: Sascha Kuehndel <dev@inusasha.de>
+Build-Depends: debhelper (>= 9), dovecot-dev (>= 2.0.15)
+Standards-Version: 3.9.6
+Homepage: http://wiki2.dovecot.org/Plugins/deleted-to-trash
+Vcs-Git: https://github.com/InuSasha/dovecot_deleted_to_trash.git
+Vcs-Browser: https://github.com/InuSasha/dovecot_deleted_to_trash
+
+Package: dovecot-deleted-to-trash
+Architecture: any
+Depends: ${shlibs:Depends}, dovecot-abi-${dovecot:ABI-Version}
+Description: The purpose of this deleted_to_trash-plugin is to fix behavior with IMAP clients (like outlook) 
+ that don't work well with dovecot, specifically not copying deleted email to your Trash folder automatically. 
+ So, what this plugin does is fixing this behavior by copying deleted items to the Trash folder. The plugin 
+ needs to tell the difference between "move" and "delete" actions on the client side, since both actions mark 
+ the original email as deleted. For a "move" case, we don't copy the email to the trash folder.
