@@ -11,7 +11,7 @@ Vcs-Browser: https://github.com/InuSasha/dovecot_deleted_to_trash
 
 Package: dovecot-deleted-to-trash
 Architecture: any
-Depends: ${shlibs:Depends}, dovecot-abi-${dovecot:ABI-Version}
+Depends: ${shlibs:Depends}, ${misc:Depends}, dovecot-abi-${dovecot:ABI-Version}
 Description: The purpose of this deleted_to_trash-plugin is to fix behavior with IMAP clients (like outlook) 
  that don't work well with dovecot, specifically not copying deleted email to your Trash folder automatically. 
  So, what this plugin does is fixing this behavior by copying deleted items to the Trash folder. The plugin 
